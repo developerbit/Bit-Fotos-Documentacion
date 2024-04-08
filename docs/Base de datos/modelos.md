@@ -78,11 +78,21 @@ las tablas con las que tiene relacion son de tipo **belongsTo** 1:1.
 
 ## Modelo
 
-las tablas con las que tiene relacion son de tipo **belongsTo** 1:1.
+las tablas con las que tiene relacion son de tipo **belongsTo** y **hasMany** 
 
 ```php
-    public function user(){
-        return $this->belongsTo(User::class, 'userId');
+
+    public function empresa(){
+        return $this->belongsTo(Empresa::class, 'empresaId');
+    }
+    public function estado(){
+        return $this->belongsTo(Estado::class, 'estado');
+    }
+        public function image(){
+        return $this->hasMany(Image::class);
+    }
+    public function favorite(){
+        return $this->hasMany(Favorite::class);
     }
 ```
 
@@ -123,6 +133,49 @@ y las tablas con las que tiene relacion son de tipo **belongsTo** 1:1.
         return $this->belongsTo(Estado::class,'estadoId');
     }
 ```
+
+## Imagen
+
+Al igual que estado esta tabla esta en singular por lo que es necesario cambiarlo asi:
+
+```php
+    protected $table = 'image';
+```
+y las tablas con las que tiene relacion son de tipo **belongsTo**, **hanOne** y **hasMany** 
+
+```php
+    public function users(){
+        return $this->belongsTo('users');
+    }
+    public function mision(){
+        return $this->belongsTo('mision');
+    }
+    public function estado(){
+        return $this->hasOne('estado');
+    }
+    public function favorite(){
+        return $this->hasMany(Favorite::class);
+    }
+    public function checkFav(User $user){
+        return $this->favorite('userId', $user->id);
+    }
+    public function veredicto(){
+        return $this->hasOne(Veredicto::class);
+    }
+
+```
+
+## Veredicto 
+
+y las tablas con las que tiene relacion son de tipo **hasMany** 
+
+```php
+      public function image(){
+        return $this->hasMany(Image::class);
+    }
+
+```
+
 ## detalles de misiones en adelante estan pendientes por que todavia no se han definido
 <!-- 
 ## Detalles Misiones

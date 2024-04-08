@@ -183,6 +183,8 @@ los campos que tiene son los siguientes:
 * userId
 * modeloId
 * Timestamps (Crea dos campos [created_at - updated_at])
+* Step, este step se agrego a partir de una migracion llamada add_step_to_misiones
+    este campo solo se actualiza por medio del frontend, ya que mediante este campo se sabra en que paso quedo y de esta forma se podra finalizar 
 
 ```php
 
@@ -455,3 +457,31 @@ los campos que tiene son los siguientes:
 ### Relaciones 
 
 * Tiene una relacion de 1:1 con Image
+
+## Favorite
+
+los campos que tiene son los siguientes:
+
+* Id
+* userId
+* imageId
+
+```php
+    public function up(): void
+    {
+        Schema::create('favorite', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('userId');
+            $table->unsignedBigInteger('imageId');
+            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('imageId')->references('id')->on('image');
+            $table->timestamps();
+        });
+    }
+
+
+```
+### Relaciones 
+
+* Esta tabla funciona como tabla pivote de tal manera que mostrara los usuarios que le den me gusta a una tabla y viceversa 
+
